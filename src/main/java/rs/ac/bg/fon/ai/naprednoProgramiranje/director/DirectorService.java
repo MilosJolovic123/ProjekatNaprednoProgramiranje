@@ -17,8 +17,6 @@ public class DirectorService {
     public Director saveDirector(Director director) {
         if(director == null)
             throw new NullPointerException("Director is null!");
-        if(director.getNoOfOscars()<0)
-            throw new IllegalArgumentException("Number of oscars for a director must be higher than 0!");
         return directorRepository.save(director);
     }
 

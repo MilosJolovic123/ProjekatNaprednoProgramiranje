@@ -18,9 +18,16 @@ public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_user;
+    @NonNull
+    @Size(min = 7, max = 50,message = "Actor name and lastname must be between 7 and 50 chars long.")
     private String NameAndLastName;
+    @NonNull
+    @Size(min = 7, max =60, message = "Username must be between 7 and 60 chars long.")
     private String username;
+    @NonNull
+    @Size(min = 7, max = 60, message = "Password must be between 7 and 60 chars long.")
     private String password;
+    @NonNull
     private String roles;
     @OneToMany(mappedBy = "newsletter_user")
     private Set<Newsletter> newsletterSet;

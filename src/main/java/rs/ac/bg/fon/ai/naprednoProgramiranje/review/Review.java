@@ -22,9 +22,12 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReview;
+    @NonNull
+    @Size(min = 5, max = 100, message = "Comment must be between 5 and 100 chars long!")
     private String comment;
-    private int grade;
 
+    private int grade;
+    @NonNull
     private Date dateGiven;
     @ManyToOne
     @JoinColumn(name="idFilm")

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.bg.fon.ai.naprednoProgramiranje.user.AppUser;
 import rs.ac.bg.fon.ai.naprednoProgramiranje.user.UserRepository;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -29,8 +30,7 @@ public class NewsletterService {
         if (user.isEmpty()) {
             throw new RuntimeException("User not found");
         }
-        if(newsletter.getNewsletter_date().toLocalDate().isAfter(LocalDate.now()))
-            throw new IllegalArgumentException("Date can't be after current date!");
+        newsletter.setNewsletter_date(Date.valueOf(LocalDate.now()));
         newsletter.setNewsletter_user(user.get());
         return newsletterRepository.save(newsletter);
     }

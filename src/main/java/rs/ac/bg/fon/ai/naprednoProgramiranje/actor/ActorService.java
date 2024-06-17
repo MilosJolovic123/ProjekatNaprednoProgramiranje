@@ -19,8 +19,6 @@ public class ActorService {
         if (actor == null)
             throw new NullPointerException("Null actor!");
 
-        if (actor.getNoOfOscars() < 0)
-            throw new IllegalArgumentException("NO. of Oscar awards mus be greater of equal to 0.");
         return actorRepository.save(actor);
     }
 }

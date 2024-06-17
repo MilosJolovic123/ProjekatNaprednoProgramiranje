@@ -17,7 +17,10 @@ public class Genre {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idGenre;
+    @NonNull
+    @Size(min = 5, max = 500, message = "Genre description that must be between 5 and 500 chars long.")
     private String genreDesctiption;
     @OneToMany(mappedBy = "film_genre")
     private Set<Film> filmSet;
+
 }
