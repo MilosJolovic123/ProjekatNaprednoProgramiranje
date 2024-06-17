@@ -16,7 +16,7 @@ public class ActorController {
      public ActorController(ActorService actorService) {
         this.actorService = actorService;
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/actor/save")
     public ResponseEntity<Actor> addActor(@RequestBody Actor actor){
         return ResponseEntity.ok(actorService.saveActor(actor));

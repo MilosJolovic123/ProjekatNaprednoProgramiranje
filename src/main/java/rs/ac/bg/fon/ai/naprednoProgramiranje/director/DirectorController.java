@@ -16,7 +16,7 @@ public class DirectorController {
         this.directorService = directorService;
 
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/directors/save")
     public Director addDirector(@RequestBody Director director){
         return directorService.saveDirector(director);

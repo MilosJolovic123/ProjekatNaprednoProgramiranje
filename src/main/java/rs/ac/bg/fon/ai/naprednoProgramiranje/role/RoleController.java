@@ -17,6 +17,7 @@ public class RoleController {
         this.roleService = roleService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("role/add/{filmId}/{actorId}")
     public ResponseEntity<Role> addRole(@RequestBody Role role, @PathVariable Long filmId, @PathVariable Long actorId){
 

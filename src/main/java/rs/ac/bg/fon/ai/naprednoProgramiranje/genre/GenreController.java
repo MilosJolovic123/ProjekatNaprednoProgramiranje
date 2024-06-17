@@ -18,7 +18,7 @@ public class GenreController {
     public GenreController(GenreService genreService) {
         this.genreService = genreService;
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
    @PostMapping("genre/save")
     public ResponseEntity<Genre> addGenre(@RequestBody Genre genre) {
         return ResponseEntity.ok(genreService.saveGenre(genre));

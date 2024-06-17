@@ -21,18 +21,18 @@ public class NewsletterController {
     public NewsletterController(NewsletterService newsletterService) {
         this.newsletterService = newsletterService;
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/newsletter/{requestedId}")
     public Optional<Newsletter> getNewsletter(@PathVariable Long requestedId) {
         return newsletterService.findOne(requestedId);
     }
-
+    @PostFilter("filterObject.newsletter_user.username==authentication.name")
      @GetMapping("/newsletters")
     public List<Newsletter> getAllNewsletters() {
         return newsletterService.findAll();
 
     }
-
+    @PreAuthorize("hasRole('ADMIN')||hasRole('USER')")
     @PostMapping("/newsletter/add")
     public ResponseEntity<Newsletter> save(@AuthenticationPrincipal UserDetails loggedUser, @RequestBody Newsletter newsletter) {
         newsletter.setNewsletter_date(Date.valueOf(LocalDate.now()));
