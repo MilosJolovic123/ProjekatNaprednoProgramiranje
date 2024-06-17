@@ -10,20 +10,42 @@ import rs.ac.bg.fon.ai.naprednoProgramiranje.genre.GenreRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * Service layer class for Film class. Ensures all CRUD ops with Film class and persisting it
+ * in H2 database.
+ * @author milos jolovic
+ */
 @Service
 public class FilmService {
+    /**
+     * Private field - reference to FilmRepository class.
+     */
     private final FilmRepository filmRepository;
+    /**
+     * Private field - reference to DirectorRepository class.
+     */
     private final DirectorRepository directorRepository;
+    /**
+     * Private field - reference to GenreRepository class.
+     */
     private final GenreRepository genreRepository;
 
+    /**
+     * Constructor injection for all the fields above.
+     * @param filmRepository reference to the film repo.
+     * @param directorRepository reference to the director repo.
+     * @param genreRepository reference to the genre repo.
+     */
     @Autowired
     public FilmService(FilmRepository filmRepository, DirectorRepository directorRepository, GenreRepository genreRepository) {
         this.filmRepository = filmRepository;
         this.directorRepository = directorRepository;
         this.genreRepository = genreRepository;
     }
-
+    /**
+     * Method that returns all Films persisted in H2 db.
+     * @return List of all Films as a DTO class.
+     */
     public List<FilmDTO> getFilmList() {
 
         List<Film> films = filmRepository.findAll();
@@ -41,7 +63,12 @@ public class FilmService {
 
         return filmsDTOs;
     }
-
+    /**
+     * Method that searches db for a specific film through id value.
+     * @param id of a specific film to be returned.
+     * @throws RuntimeException if the specific film is not to be found in H2.
+     * @return Film with film_id id.
+     */
     public FilmDTO getFilmById(Long id) {
         Optional<Film> film=filmRepository.findById(id);
         if(film.isEmpty()){
@@ -54,7 +81,16 @@ public class FilmService {
         filmDto.setLandOfOrigin(film.get().getLandOfOrigin());
         return filmDto;
     }
-
+    /**
+     * Method that enables persistence of the film in H2 db.
+     * Not adding any validation to dates because of Films that have a Release Date in the future.
+     * (that are to be released)
+     * @param film to be saved.
+     * @param requestedDirector director of a film to be saved.
+     * @param requestedGenre genre of a film to be saved.
+     * @throws RuntimeException if director or genre are not to be found.
+     * @return the film to be saved in H2 db.
+     */
     public Film saveFilm(Film film,Long requestedDirector, Long requestedGenre) {
 
         Optional<Director> directorOptional = directorRepository.findById(requestedDirector);
@@ -68,7 +104,15 @@ public class FilmService {
 
         return filmRepository.save(film);
     }
-
+    /**
+     * Method that ensures updates to be carried on a film object.
+     * @param film that carries new info.
+     * @param requestedFilm to be modified.
+     * @param requestedDirector new director value.
+     * @param requestedGenre new genre value.
+     * @throws RuntimeException if director, film or genre are not present.
+     * @return modified film.
+     */
     public Film updateFilm(Film film,Long requestedFilm,Long requestedDirector, Long requestedGenre){
         Optional<Director> directorOptional = directorRepository.findById(requestedDirector);
         Optional<Genre> genreOptional = genreRepository.findById(requestedGenre);
@@ -88,7 +132,10 @@ public class FilmService {
 
         return filmRepository.save(filmToUpdate.get());
     }
-
+    /**
+     * deleted film
+     * @param requestedId of a specific film to be found in H2 db and then deleted.
+     */
     public void FilmDelete(Long requestedId){
         filmRepository.deleteById(requestedId);
     }

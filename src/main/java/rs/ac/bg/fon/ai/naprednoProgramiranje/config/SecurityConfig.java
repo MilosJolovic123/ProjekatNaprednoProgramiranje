@@ -11,18 +11,31 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import rs.ac.bg.fon.ai.naprednoProgramiranje.UserDetailService.JpaUserDetailsService;
-
+/**
+ * A class that represents custom configuration of Spring Security.
+ * @author milos jolovic
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
+    /**
+     * Reference to the custom-made UserDetailService.
+     */
      private final JpaUserDetailsService userDetailsService;
-
+    /**
+     * Constructor injection of JPAUserDetailsService.
+     * @param userDetailsService reference to userDetailsService
+     */
      public SecurityConfig(JpaUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
-
+    /**
+     * Custom made Filter chain that ensures method endpoint security.
+     * @param http parameter that is to be configured.
+     * @return Built http parameter.
+     * @throws Exception class if endpoint not found.
+     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -41,7 +54,10 @@ public class SecurityConfig {
 
         return http.build();
     }
-
+    /**
+     * Custom PasswordEncoder for encoding passwords before persisting them in H2 db.
+     * @return BCryptPasswordEncoder
+     */
      @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

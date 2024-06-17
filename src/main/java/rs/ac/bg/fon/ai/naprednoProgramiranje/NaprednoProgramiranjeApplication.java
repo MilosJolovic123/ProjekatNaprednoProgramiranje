@@ -7,13 +7,26 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import rs.ac.bg.fon.ai.naprednoProgramiranje.user.AppUser;
 import rs.ac.bg.fon.ai.naprednoProgramiranje.user.UserRepository;
-
+/**
+ * Our Spring app :D
+ * @author milos jolovic
+ */
 @SpringBootApplication
 public class NaprednoProgramiranjeApplication {
-
+	/**
+	 * Entry point of the app :D
+	 * @param args args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(NaprednoProgramiranjeApplication.class, args);
 	}
+
+	/**
+	 * bean for creation of some users in H2.
+	 * @param userRepository reference to the user repo
+	 * @param encoder reference to the specific encoder we are using
+	 * @return executed command
+	 */
 	@Bean
 	CommandLineRunner commandLineRunner(UserRepository userRepository, PasswordEncoder encoder) {
 		return args ->{
